@@ -1,0 +1,61 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-kr9tqXEly8ZgYNXh8Ba2BaVESjADhoCiCQqn3bPkS70='; style-src 'sha256-x66faUhusyxQ8Nh957DZ5YRzd7qiCTH8dnVIltFk9WA='; connect-src 'none'; img-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'"><title>Hermes Discord 암호화 등록</title><style>*{box-sizing:border-box}body{margin:0;background:#0b1220;color:#e6edf8;font:16px/1.65 system-ui,sans-serif}main{max-width:640px;margin:auto;padding:24px 18px 50px}h1{font-size:25px;line-height:1.3}h2{font-size:19px}section{background:#152137;padding:18px;border-radius:15px;margin:18px 0}.notice{border-left:4px solid #f5c46c;padding-left:13px}.status{padding:12px;border-radius:8px;background:#253149}.ok{background:#153b30;color:#a7f3ce}.error{background:#492129;color:#fecaca}label{display:block;margin:12px 0 8px}input,textarea,button,.download{width:100%;padding:13px;border-radius:9px;font:inherit}input,textarea{background:#0b1220;color:#eef3ff;border:1px solid #748399}button,.download{background:#72d8b3;border:0;color:#09241b;font-weight:700;margin-top:14px;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.download{display:block;text-decoration:none;text-align:center}textarea{font:12px/1.5 monospace;min-height:130px;word-break:break-all;margin-top:12px}small{color:#adbed6}.mono{font:13px/1.5 monospace;overflow-wrap:anywhere}li{margin:9px 0}a{color:#9de4c9}[hidden]{display:none!important}details{margin-top:16px}summary{cursor:pointer}footer{font-size:13px;color:#adbed6}</style></head><body><main>
+<h1>Hermes Discord<br>휴대폰용 암호화 등록</h1>
+<p class="notice">토큰 원문은 채팅에 보내지 마세요. 이 파일은 서버로 토큰을 전송하지 않습니다. 휴대폰에서 암호화한 JSON 파일만 보내는 절차입니다.</p>
+<section><h2>1. 먼저 암호화 준비 상태 확인</h2><p>이 HTTPS 페이지를 아이폰의 사파리 또는 크롬에서 여세요. 아래에 초록색 ‘암호화 준비 완료’가 표시되는지 확인하세요.</p><p id="status" class="status" role="status" aria-live="polite">암호화 기능 확인 중… 이 문구가 바뀌지 않으면 토큰을 입력하지 마세요.</p></section>
+<section><h2>2. 새 봇의 토큰만 입력</h2><p>초록색 <b>‘암호화 준비 완료’</b>가 표시된 경우에만 Discord 개발자 포털의 <b>Hermes agent → Bot → Reset Token(토큰 초기화)</b>에서 발급하세요. 인증은 Discord 화면에서 직접 완료합니다.</p><p>대상 애플리케이션: <span class="mono">1558973888808091718</span></p><form id="form" autocomplete="off"><label for="token">봇 토큰 (비밀번호·2FA 인증코드 아님)</label><input id="token" type="password" name="discord_bot_handoff" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="250" disabled><button id="encrypt" type="submit" disabled>암호화 파일 만들기</button></form><small>토큰이 보이는 화면은 캡처하지 마세요. 생성 후 입력칸은 비웁니다.</small></section>
+<section id="result" hidden><h2>3. 암호화된 파일만 보내기</h2><a id="download" class="download">암호화 JSON 파일 다운로드</a><p>내려받은 <b>hermes-discord-encrypted-…json</b> 파일을 지금 대화 중인 텔레그램 채팅에 ‘파일’로 첨부하세요.</p><details><summary>파일 다운로드가 안 된다면: 암호화된 텍스트 보기</summary><p>아래는 토큰 원문이 아니라 암호문입니다. 전체를 복사해서 이 채팅에 보내도 됩니다.</p><textarea id="packet" readonly aria-label="암호화된 등록 데이터"></textarea></details></section>
+<section><h2>진행 상태와 주의사항</h2><ul><li>이 파일 자체로 봇이 온라인이 되지는 않습니다. 암호문을 받은 뒤 PC에서 검증·등록하는 단계가 남습니다.</li><li>복호화용 개인키는 Hermes가 실행되는 PC에만 저장돼 있습니다. 이 HTML에는 공개키만 있습니다.</li><li>네트워크 전송 기능, 외부 스크립트, 분석 도구, 브라우저 저장소를 사용하지 않습니다.</li><li>휴대폰 브라우저에서 암호화가 지원되지 않으면 입력을 차단합니다. 토큰을 채팅에 붙여넣는 대체 방식은 사용하지 마세요.</li><li>기존 Telegram 설정은 아직 변경하지 않았습니다.</li></ul></section>
+<footer>등록 요청 ID: <span id="request" class="mono"></span><br>유효기간: <span id="expires"></span><br>수행 모델: gpt-6.1-sol / openai-codex</footer></main><script>const CONFIG={"version":1,"request_id":"641de4e31e176ed66be7c020eb7825e6","application_id":"1558973888808091718","expires_at":1791847276,"public_key_spki":"MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAmA04jhNvPXBq56Ts9BMEQr0B2y2EwfyoLy38WqyFZK8F+P2vRdhi1u3kM3SLX/u11Zlik1UkbY6GxjPoJG8uFYGtZkhVUHOnMWyXN+LxGoOttyU4XTHruueYPZDl+QlcAYIvJPGOAXmhIIj5zr/KFLXeQZlTPqhHUOne6utQ+yrSu3qAzdNG09vazl2esMmpQMe2X771pMt9FHLueW1U1tcNbA5UPKXfegUHRfdLFdVGri2OgfnYE4/U8KrsAPU0VyS8JGglcRHdDQbU+D07X0BDiZDmA4CYRF9MIsH9js7igTZbzdGoUtXIsPhXV3wSOb/8MEPmNKyKdq5F9YQr1YsIeQRSBwsH2GmFg6ia0r6fW1cUNgfVNjbLPkPQ2lZPZj0+lqyQXpcAOZ3uiOOlxIilZrLL36++kJjrcYvzOl0MlXks1wKoCYAsGoygaTfRYteHi1lHxa4gHKPbqfA0Bvym6wXpjeNSbTVwIghvn434QZnRJwKiGbST+mN+/ALjAgMBAAE="};
+
+'use strict';
+const statusBox=document.getElementById('status');
+const tokenInput=document.getElementById('token');
+const submit=document.getElementById('encrypt');
+const result=document.getElementById('result');
+const download=document.getElementById('download');
+const packetText=document.getElementById('packet');
+let objectUrl=null;
+function display(text,kind=''){statusBox.textContent=text;statusBox.className='status '+kind;}
+function fromBase64(text){return Uint8Array.from(atob(text),c=>c.charCodeAt(0));}
+function toBase64(bytes){return btoa(String.fromCharCode(...bytes));}
+async function encryptToken(token){
+ if(Date.now()/1000>=CONFIG.expires_at)throw new Error('이 등록 파일은 만료됐습니다. 채팅에서 새 파일을 요청하세요.');
+ if(!globalThis.crypto?.subtle || !globalThis.isSecureContext)throw new Error('이 브라우저에서는 안전한 암호화를 지원하지 않습니다. 토큰을 입력하지 말고 다른 브라우저에서 여세요.');
+ if(!/^[A-Za-z0-9_.-]{30,250}$/.test(token))throw new Error('공백이나 줄바꿈 없이 봇 토큰만 입력하세요. 비밀번호나 인증코드는 입력하지 마세요.');
+ const key=await crypto.subtle.importKey('spki',fromBase64(CONFIG.public_key_spki),{name:'RSA-OAEP',hash:'SHA-256'},false,['encrypt']);
+ const label=new TextEncoder().encode('hermes-discord-handoff:v1:'+CONFIG.request_id+':'+CONFIG.application_id);
+ const bytes=new TextEncoder().encode(token);
+ try{
+  const encrypted=await crypto.subtle.encrypt({name:'RSA-OAEP',label},key,bytes);
+  return {version:1,request_id:CONFIG.request_id,application_id:CONFIG.application_id,algorithm:'RSA-OAEP-SHA256',ciphertext:toBase64(new Uint8Array(encrypted))};
+ }finally{bytes.fill(0);}
+}
+globalThis.encryptToken=encryptToken;
+document.getElementById('form').addEventListener('submit',async event=>{
+ event.preventDefault(); submit.disabled=true; result.hidden=true; packetText.value='';
+ if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null;download.removeAttribute('href');}
+ display('휴대폰에서 암호화 중입니다…');
+ try{
+  const packet=await encryptToken(tokenInput.value);
+  const text=JSON.stringify(packet,null,2);
+  packetText.value=text;
+  objectUrl=URL.createObjectURL(new Blob([text],{type:'application/json'}));
+  download.href=objectUrl;
+  download.download='hermes-discord-encrypted-'+CONFIG.request_id.slice(0,8)+'.json';
+  result.hidden=false;
+  display('암호화 완료. 아래에서 JSON 파일을 내려받아 이 텔레그램 채팅에 첨부하세요.','ok');
+ }catch(error){display(error.message,'error');}
+ finally{tokenInput.value='';submit.disabled=false;}
+});
+(async()=>{
+ document.getElementById('request').textContent=CONFIG.request_id;
+ document.getElementById('expires').textContent=new Date(CONFIG.expires_at*1000).toLocaleString('ko-KR');
+ try{
+  if(Date.now()/1000>=CONFIG.expires_at)throw new Error('이 등록 파일은 만료됐습니다. 새 파일을 요청하세요.');
+  if(!globalThis.crypto?.subtle || !globalThis.isSecureContext)throw new Error('안전한 암호화 기능을 사용할 수 없습니다. 토큰을 입력하지 말고, 파일을 크롬·사파리 같은 브라우저에서 다시 열어주세요.');
+  await crypto.subtle.importKey('spki',fromBase64(CONFIG.public_key_spki),{name:'RSA-OAEP',hash:'SHA-256'},false,['encrypt']);
+  tokenInput.disabled=false;submit.disabled=false;
+  display('암호화 준비 완료 — 토큰을 입력할 수 있습니다.','ok');
+ }catch(error){tokenInput.value='';tokenInput.disabled=true;submit.disabled=true;display(error.message,'error');}
+})();
+</script></body></html>
